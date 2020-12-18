@@ -68,16 +68,17 @@ def lambda_handler(event, context):
         body_list = []
         
         for val in link_list:
-            full_para =""
+            final_para =""
             soup2 = BeautifulSoup(urllib.request.urlopen(val).read(),"html.parser")
             b_tags = soup2.find_all("p") #find all <p> items from html page resource
             
             for i in b_tags:
                 #collecting paragraphs
-                full_para = i.text + full_para
+                full_para = i.text
+                final_para = final_para+full_para
+                print(final_para)
                 
-                
-            body_list.append(full_para.strip())
+            body_list.append(" ".join(final_para.strip()))
     #--------------------------------------------------------------------#        
     feed = feedparser.parse('https://www.engadget.com/rss.xml')        
     key2 = 'engadget.txt'
